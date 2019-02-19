@@ -1,0 +1,34 @@
+.noheader {
+	margin-top: 4.5px;
+}
+
+#block-ui .updateBackground {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 200%;
+	z-index: 999998;
+	background-color: silver;
+	filter: alpha(opacity = 50);
+	-moz-opacity: .50;
+	opacity: .50;
+}
+
+#block-ui .updateProgress {
+	text-align: center;
+	width: 100%;
+	background-color: #ffffff;
+	left: 0;
+	top: 40%;
+	z-index: 999999;
+	margin-top: -3px;
+	border-top: 7px solid #6E6B6C;
+	border-bottom: 7px solid #6E6B6C;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.icon-preloader {
+	background-image: url("../img/preloader.png");
+	background-position: 0 0;
+}

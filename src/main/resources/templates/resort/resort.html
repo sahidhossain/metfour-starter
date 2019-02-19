@@ -1,0 +1,105 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title th:text="#{resort.title}">Resort</title>
+		<span th:substituteby="commons :: common-css"></span>
+	</head>
+	<body th:with="isNew=${#strings.isEmpty(resort.code)}">
+		<div id="headerbar" class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+					</button>
+					<span class="brand" th:text="#{resort.brand}">Brand text</span>
+
+					<div class="nav-collapse collapse">
+						<ul class="nav pull-right" th:if="${isNew}">
+							<li><a class="viewmode updatebutton addbutton submit" id="headerconfirmbutton" th:text="#{action.create}">Create</a></li>
+						</ul>
+						<ul class="nav pull-right" th:unless="${isNew}">
+							<li><a class="editmode" id="addbutton" th:href="@{'/resort'}" th:text="#{action.add}">Add</a></li>
+							<li><a class="editmode" id="updatebutton" th:text="#{action.update}">Update</a></li>
+							<li class="nodisplay"><a class="viewmode updatebutton addbutton submit" id="headerconfirmbutton" th:text="#{action.save}">Save</a></li>
+							<li class="nodisplay"><a class="viewmode updatebutton" id="headercancelbutton" th:text="#{action.cancel}">Cancel</a></li>
+						</ul>
+						<form id="searchform" class="navbar-search pull-right" method="get" th:action="@{'/resort/'}">
+							<input id="datasearchfield" class="typeahead search-query" type="text" placeholder="Search" data-provide="typeahead" th:attr="data-search-url=@{'/search/resort/'}" />
+							<input class="typeahead-val" type="hidden" name="code" value="" />
+							<input class="typeahead-desc" type="hidden" value="" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="container" class="container">
+			<header id="overview" class="subhead">
+				<div class="subnav subnav-fixed" id="subnavscroll">
+					<ul class="nav nav-pills">
+					</ul>
+				</div>
+			</header>
+
+			<form id="mainform" th:object="${resort}" class="form-horizontal" method="POST" autocomplete="off" th:action="@{'/resort'}">
+				<section>
+					<div class="row anything noheader">
+						<div class="span6 offset3">
+							<fieldset>
+								<div class="control-group">
+									<label for="code" class="control-label" th:text="#{resort.code.label}"></label>
+									<div class="controls">
+										<input type="text" data-required="required" th:field="*{code}" class="input-small include" placeholder="Code"/>
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="description" class="control-label" th:text="#{resort.name.label}"></label>
+									<div class="controls">
+										<input id="description" data-required="required" th:field="*{description}" type="text" data-maxlength="50"
+											class="include" placeholder="Resort name" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="destination" class="control-label" th:text="#{resort.destination.label}"></label>
+									<div class="controls">
+										<div class="input-append">
+											<input class="typeahead include" id="destinationsearch"
+												type="text" data-required="required" autocomplete="off"
+												placeholder="Destination" data-search-url="/search/destination/"
+												th:attr="data-search-url=@{'/search/destination/'}" /><span
+												class="add-on"><i class="icon-search"></i></span>
+											<input class="typeahead-val" type="hidden" th:field="*{destination}" />
+											<input class="typeahead-desc" type="hidden" value="" />
+										</div>
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="regions" class="control-label" th:text="#{resort.departure.label}"></label>
+									<div class="controls">
+										<select id="departportlist" th:field="*{departurePorts}"
+											class="include con-multiselect" multiple="multiple">
+											<option th:each="item : ${ports}" th:value="${item.code}" th:text="${item.description}" />
+										</select>
+									</div>
+								</div>
+								<div class="control-group">
+									<label for="regions" class="control-label" th:text="#{resort.arrival.label}"></label>
+									<div class="controls">
+										<select id="arrvalList" th:field="*{arrivalPorts}"
+											class="include con-multiselect" multiple="multiple">
+											<option th:each="item : ${ports}" th:value="${item.code}" th:text="${item.description}" />
+										</select>
+									</div>
+								</div>
+							</fieldset>
+						</div>
+					</div>
+				</section>
+			</form>
+		</div>
+
+		<span th:substituteby="commons :: common-html"></span>
+		<span th:substituteby="commons :: common-js"></span>
+	</body>
+</html>
