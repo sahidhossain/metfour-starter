@@ -2,32 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8" />
-		<title th:text="#{person.title}">Resort</title>
+		<title th:text="#{person.title}">Person</title>
 		<span th:substituteby="commons :: common-css"></span>
 	</head>
-	 
-<body th:with="isNew=${#strings.isEmpty(person.id)}">
-	<span class="brand" th:text="${#isNew}"></span>
+	
+	<body th:with="isNew=${#strings.isEmpty(person.id)}">
 		<div id="headerbar" class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
 					<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 						<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 					</button>
-					<span class="brand" th:text="#{person.brand}">Brand text</span>
+					<span class="brand" th:text="#{person.brand}"></span>
 
 					<div class="nav-collapse collapse">
 						<ul class="nav pull-right" th:if="${isNew}">
 							<li><a class="viewmode updatebutton addbutton submit" id="headerconfirmbutton" th:text="#{action.create}">Create</a></li>
 						</ul>
 						<ul class="nav pull-right" th:unless="${isNew}">
-							<li><a class="editmode" id="addbutton" th:href="@{'/resort'}" th:text="#{action.add}">Add</a></li>
+							<li><a class="editmode" id="addbutton" th:href="@{'/person'}" th:text="#{action.add}">Add</a></li>
 							<li><a class="editmode" id="updatebutton" th:text="#{action.update}">Update</a></li>
 							<li class="nodisplay"><a class="viewmode updatebutton addbutton submit" id="headerconfirmbutton" th:text="#{action.save}">Save</a></li>
 							<li class="nodisplay"><a class="viewmode updatebutton" id="headercancelbutton" th:text="#{action.cancel}">Cancel</a></li>
 						</ul>
 						<form id="searchform" class="navbar-search pull-right" method="get" th:action="@{'/person/'}">
-							<input id="datasearchfield" class="typeahead search-query" type="text" placeholder="Search" data-provide="typeahead" th:attr="data-search-url=@{'/search/resort/'}" />
+							<input id="datasearchfield" class="typeahead search-query" type="text" placeholder="Search" data-provide="typeahead" th:attr="data-search-url=@{'/search/person/'}" />
 							<input class="typeahead-val" type="hidden" name="code" value="" />
 							<input class="typeahead-desc" type="hidden" value="" />
 						</form>
@@ -35,6 +34,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div id="container" class="container">
 			<header id="overview" class="subhead">
 				<div class="subnav subnav-fixed" id="subnavscroll">
@@ -42,29 +42,22 @@
 					</ul>
 				</div>
 			</header>
+
 			<form id="mainform" th:object="${person}" class="form-horizontal" method="POST" autocomplete="off" th:action="@{'/person'}">
 				<section>
 					<div class="row anything noheader">
 						<div class="span6 offset3">
 							<fieldset>
-							<!-- for id -->
 								<div class="control-group">
-									<label for="id" class="control-label" th:text="#{person.id.label}"></label>
-									<div class="controls">
-										<input type="text" data-required="required" th:field="*{id}" class="input-small include" placeholder="Code"/> <!-- th:field="*{code}" -->
-									</div>
-								</div>
-								<!-- for name -->
-								<div class="control-group">
-									<label for="name" class="control-label" th:text="#{resort.name.label}"></label>
+									<label for="name" class="control-label" th:text="#{person.name.label}"></label>
 									<div class="controls">
 										<input id="namee"  th:field="*{name}" data-required="required" type="text" data-maxlength="50"
-											class="include" placeholder="Resort name" /> 
+											class="include" placeholder="Person name" /> 
 									</div>
 								</div>
 							<!--  for date formate -->
 							<div class="control-group">
-								<label for="datepicker" th:field="*{dateOfBirth}" class="control-label">Datepicker:</label>
+								<label for="datepicker" class="control-label" th:text="#{person.birthdate.label}"></label>
 								<div class="controls">
 									<div class="input-append">
 										<input id="datepicker"	th:field="*{dateOfBirth}" class="input-datesize include con-datepicker" type="text"
@@ -74,9 +67,9 @@
 									</div>
 								</div>
 							</div>
-								<!-- for radiobox -->
+							<!-- for radiobox -->
 								<div class="control-group">
-									<label for="groupofradios" class="control-label">Sex</label>
+									<label for="groupofradios" class="control-label" th:text="#{person.sex.label}"></label>
 									<div class="controls">
 										<label class="radio"> <input type="radio"
 											id="groupofradiosradio1"  value="male" th:field="*{sex}" class="include" />
@@ -87,43 +80,41 @@
 										</label> 
 									</div>
 								</div>
-								<!-- Checkbox -->
+							<!-- Checkbox -->
 								<div class="control-group">
-								    <label class="control-label" for="singlecheckbox">Married:</label>
+								    <label class="control-label" for="singlecheckbox" th:text="#{person.married.label}"></label>
 								    <div class="controls ">
 								        <label class="checkbox">
 								            <input id="singlecheckbox" type="checkbox" th:field="*{married}" value="checkvalue" class="include"/>
+								        <!--     Married -->
 								        </label>
 								    </div>
 								</div>
-
 							<!-- Highes Degree using Select input -->
 							<div class="control-group">
-							    <label for="selectwithinputs" class="control-label">Select with inputs:</label>
+							    <label for="selectwithinputs" class="control-label" th:text="#{person.degree.label}" ></label>
 							    <div class="controls">
 							        <select th:field="*{highestDegree}" class="input-large include" id="selectwithinputs">
-							            <option value="SSC" class="clickchangetrigger" data-clickchangegroup="group2"></option>
-							            <option value="HSC" class="clickchangetrigger" data-clickchangepair="group2pair1" data-clickchangegroup="group2">Input 1</option>
-							            <option value="B.Sc." class="clickchangetrigger" data-clickchangepair="group2pair2" data-clickchangegroup="group2">Input 2</option>
+							            <option th:each="item : ${degrees}" th:value="${item}" th:text="${item}" />
 							        </select>
 							    </div>
 							</div>
 							<!-- TextAreal -->
 							<div class="control-group">
-							    <label for="textarea" class="control-label">Address:</label>
+							    <label for="textarea" class="control-label" th:text="#{person.address.label}"></label>
 							    <div class="controls">
 							        <textarea id="textarea" th:field="*{address}" class="input-large include"></textarea>
 							    </div>
 							</div>
 							<!-- Search for query -->
 								<div class="control-group">
-									<label for="destination" class="control-label" th:text="#{resort.destination.label}"></label>
+									<label for="destination" class="control-label" th:text="#{person.city.label}"></label>
 									<div class="controls">
 										<div class="input-append">
 											<input class="typeahead include" id="destinationsearch"
 												type="text" data-required="required" autocomplete="off"
 												placeholder="City" data-search-url="/search/destination/"
-												th:attr="data-search-url=@{'/search/destination/'}" /><span
+												th:attr="data-search-url=@{'/search/city/'}" /><span
 												class="add-on"><i class="icon-search"></i></span>
 											<input class="typeahead-val" type="hidden" th:field="*{city}" />
 											<input class="typeahead-desc" type="hidden" value="" />
@@ -131,19 +122,19 @@
 									</div>
 								</div>
 																				
-						<!-- courses -->
+							<!-- courses -->
 								<div class="control-group">
 									<label for="regions" class="control-label" th:text="#{person.course.label}"></label>
 									<div class="controls">
 										<select id="departportlist" th:field="*{courses}"
 											class="include con-multiselect" multiple="multiple">
-											<option th:each="item : ${course}" th:value="${item.code}" th:text="${item.course}" />
+											<option th:each="item : ${courses}" th:value="${item.key}" th:text="${item.value}" />
 										</select>
 									</div>
 								</div>
 							<!-- Time validation -->
 							<div class="control-group">
-							    <label for="startandenddatestart" class="control-label">Training dates:</label>
+							    <label for="startandenddatestart" class="control-label" th:text="#{person.trainingdate.label}"></label>
 							    <div class="controls ">
 							        <div class="input-append inlineappends">
 							            <input id="startandenddatestart" th:field="*{trainingStartDate}" class="input-datesize include con-startdate" type="text" data-datepair="startandenddates" name="startandenddatesstart" placeholder="Required" /><span class="add-on"><i class="icon-calendar"></i></span>
@@ -160,5 +151,8 @@
 				</section>
 			</form>
 		</div>
+
+		<span th:substituteby="commons :: common-html"></span>
+		<span th:substituteby="commons :: common-js"></span>
 	</body>
 </html>
